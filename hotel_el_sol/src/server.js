@@ -1,27 +1,44 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors"; // 1. Importar el paquete CORS
-import usuariosRoutes from "./routes/usuarios.js";
+import express from 'express';
+import cors from 'cors';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+// Importación de las Rutas (Asegúrate de que estas rutas sean correctas)
 
+import habitacionesRoutes from './routes/habitacionesRoutes.js'; 
+import reservasRoutes from './routes/reservasRoutes.js'; 
+import serviciosRoutes from './routes/serviciosRoutes.js';
+import tiposHabitacionRoutes from './routes/tiposHabitacionRoutes.js';
+import usuariosRoutes from './routes/usuariosRoutes.js';
+
+// Inicialización de Express
 const app = express();
+const port = 3000;
 
-// MIDDLEWARES
-app.use(express.json()); // Necesario para leer datos JSON en el cuerpo de las peticiones (POST/PUT)
+// Configuración de middlewares
+app.use(cors()); // Habilita CORS para permitir conexiones desde el frontend de React
+app.use(express.json()); // Habilita el uso de JSON en el cuerpo de las peticiones (req.body)
 
-// 2. Middleware CORS
-// Esto permite que el frontend (ej. localhost:5173) pueda hacer peticiones
-// al backend (localhost:3000) sin ser bloqueado por la política del navegador.
-// Puedes configurar opciones más específicas si es necesario, pero este es el valor por defecto.
-app.use(cors());
+// Obtener el directorio actual para servir archivos estáticos (si fuera necesario)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// RUTAS
-// Asigna el prefijo '/api/usuarios' a todas las rutas definidas en usuariosRoutes
-app.use('/api/usuarios', usuariosRoutes); 
+// Uso de las Rutas de la API
+// Todas las rutas tendrán el prefijo /api
+app.use('/api', habitacionesRoutes);
+app.use('/api', reservasRoutes);
+app.use('/api', serviciosRoutes); 
+app.use('/api', tiposHabitacionRoutes);
+app.use('/api', usuariosRoutes);
 
-app.listen(process.env.PORT, () => {
-    // 3. Pequeña validación de puerto por si .env no lo define
-    const port = process.env.PORT || 3000;
+// Nota: Deberás importar y usar rutas para usuarios si planeas usarlas.
+
+// Manejo de rutas no encontradas (404)
+app.use((req, res) => {
+    res.status(404).send('Ruta no encontrada');
+});
+
+// Inicio del servidor
+app.listen(port, () => {
     console.log(`Servidor corriendo en http://localhost:${port}`);
 });
