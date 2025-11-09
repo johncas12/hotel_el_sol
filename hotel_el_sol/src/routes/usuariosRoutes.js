@@ -10,10 +10,11 @@ import {
 const router = Router();
 
 // Rutas CRUD para /api/usuarios
-router.get('/usuarios', getUsuarios); // Obtener todos los usuarios
-router.get('/usuarios/:id', getUsuario); // Obtener un usuario por ID
-router.post('/usuarios', createUsuario); // Crear un nuevo usuario
-router.put('/usuarios/:id', updateUsuario); // Actualizar un usuario por ID
-router.delete('/usuarios/:id', deleteUsuario); // Eliminar un usuario por ID
+router.get('/', getUsuarios); // GET /api/usuarios
+router.get('/:id', getUsuario); // GET /api/usuarios/:id
+router.post('/', createUsuario); // POST /api/usuarios
+router.put('/:id', updateUsuario); // PUT /api/usuarios/:id
+router.delete('/:id', deleteUsuario); // DELETE /api/usuarios/:id
+
 
 export default router;

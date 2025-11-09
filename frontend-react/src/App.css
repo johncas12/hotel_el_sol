@@ -1,4 +1,3 @@
-/* src/App.css */
 
 body {
     margin: 0;
@@ -187,6 +186,7 @@ form button {
     }
 }
 
+
 /* Listado de elementos (usuarios, servicios, habitaciones, etc.) */
 .listado {
     flex: 2;
@@ -244,3 +244,4 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
